@@ -7,10 +7,10 @@ Requires=docker.service
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill %p
 ExecStartPre=-/usr/bin/docker rm %p
-ExecStartPre=/bin/sh -c "docker pull coco/coco-registry-up"
+ExecStartPre=/bin/sh -c "docker pull coco/up-registry-proxy"
 ExecStart=/bin/sh -c "\
   UP_PASSWORD=$(etcdctl get /ft/_credentials/registry/up-password); \
-  docker run --name %p --rm -p 81:80 --link registry:registry -e "UP_PASSWORD=$UP_PASSWORD" coco/coco/up-registry-proxy"
+  docker run --name %p --rm -p 81:80 --link registry:registry -e "UP_PASSWORD=$UP_PASSWORD" coco/up-registry-proxy"
 
 Restart=on-failure
 RestartSec=10
